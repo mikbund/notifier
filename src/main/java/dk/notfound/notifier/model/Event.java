@@ -9,6 +9,7 @@ import javax.persistence.*;
 
 import javax.validation.constraints.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 
@@ -30,10 +31,10 @@ public class Event {
     private Boolean acknowledged;
 
     @CreationTimestamp
-    private LocalDateTime created_ts;
+    private Timestamp created_ts;
 
     @UpdateTimestamp
-    private LocalDateTime updated_ts;
+    private Timestamp updated_ts;
 
     @Column
     private String eventRaw;
@@ -76,11 +77,13 @@ public class Event {
         return serviceIdentifier;
     }
 
-    public LocalDateTime getCreated_ts() {
+
+    //LocalDateTime
+    public Timestamp getCreated_ts() {
         return created_ts;
     }
 
-    public LocalDateTime getUpdated_ts() {
+    public Timestamp getUpdated_ts() {
         return updated_ts;
     }
 }
