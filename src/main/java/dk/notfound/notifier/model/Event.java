@@ -2,6 +2,7 @@ package dk.notfound.notifier.model;
 
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.UpdateTimestamp;
 
 
@@ -9,16 +10,22 @@ import javax.persistence.*;
 
 import javax.validation.constraints.*;
 
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 
 @Entity
-@Table(name="events")
+@Table(name="events", indexes = {
+        @Index(name="IDX_acknowledged",columnList = "acknowledged"),
+        @Index(name="IDX_created_ts",columnList = "created_ts"),
+        @Index(name="IDX_updated_ts",columnList = "updated_ts"),
+        @Index(name="IDX_serviceIdentifier",columnList = "serviceIdentifier")
+}   )
 public class Event {
 
     @Id
-    @NotNull
+    //@NotNull
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
 
@@ -48,7 +55,6 @@ public class Event {
         this.acknowledged=false;
         this.serviceIdentifier = serviceIdentifier;
         this.eventRaw=eventRaw;
-
 
     }
 
