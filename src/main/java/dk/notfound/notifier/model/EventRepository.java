@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 //CrudRepository
-public interface EventRepository extends JpaRepository<Event, Long> {
+public interface EventRepository extends CrudRepository<Event, Long> {
 
 
     Iterable<Event>  findAllByAcknowledged(Boolean acknowledged);
