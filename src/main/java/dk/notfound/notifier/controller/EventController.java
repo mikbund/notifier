@@ -20,19 +20,19 @@ public class EventController {
     }
 
 
-    @GetMapping(path="/event/unhandled")
+    @GetMapping(path="/events/unhandled")
     public Iterable<Event> listUnhandledEvents() {
         Iterable<Event> events = eventRepository.findAllByAcknowledged(false);
         return events;
     }
 
-
+/*
     @GetMapping(path="/event/{id}")
-    public Event getEvents(Long id) {
+    public Event getEvents(@PathVariable Long id) {
         Optional<Event> events = eventRepository.findById(id);
         return events.get();
     }
-
+*/
 
     @PostMapping(path="/event/service/{serviceIdentifier}")
     public @ResponseBody
@@ -42,7 +42,7 @@ public class EventController {
         return event;
     }
 
-    @PostMapping(path="/event/acknowledge/{id}")
+    @PostMapping(path="/events/acknowledge/{id}")
     public @ResponseBody Event ackKnowledge(@PathVariable Long id, @RequestBody Event event) {
         Optional<Event> repoEvent = eventRepository.findById(id);
         repoEvent.get().setAcknowledged(event.getAcknowledged());
