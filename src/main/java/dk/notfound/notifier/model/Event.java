@@ -1,19 +1,14 @@
 package dk.notfound.notifier.model;
 
 
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.UpdateTimestamp;
-
-
 import javax.persistence.*;
-
 import javax.validation.constraints.*;
-
-
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-
 
 @Entity
 @Table(name="events", indexes = {
@@ -43,7 +38,7 @@ public class Event {
     @UpdateTimestamp
     private Timestamp updated_ts;
 
-    @Column
+    @Column(columnDefinition="TEXT")
     private String eventRaw;
 
 
@@ -55,7 +50,6 @@ public class Event {
         this.acknowledged=false;
         this.serviceIdentifier = serviceIdentifier;
         this.eventRaw=eventRaw;
-
     }
 
     public Long getId() {
@@ -78,11 +72,9 @@ public class Event {
         this.eventRaw = eventRaw;
     }
 
-
     public String getServiceIdentifier() {
         return serviceIdentifier;
     }
-
 
     //LocalDateTime
     public Timestamp getCreated_ts() {

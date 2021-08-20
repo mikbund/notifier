@@ -13,7 +13,8 @@ public class EventController {
     @Autowired
     EventRepository eventRepository;
 
-    @GetMapping(path="/event")
+
+    @GetMapping(path="/events")
     public Iterable<Event> listEvents() {
         Iterable<Event> events = eventRepository.findAll();
         return events;
@@ -26,13 +27,13 @@ public class EventController {
         return events;
     }
 
-/*
+
     @GetMapping(path="/event/{id}")
     public Event getEvents(@PathVariable Long id) {
         Optional<Event> events = eventRepository.findById(id);
         return events.get();
     }
-*/
+
 
     @PostMapping(path="/event/service/{serviceIdentifier}")
     public @ResponseBody
@@ -50,6 +51,5 @@ public class EventController {
 
         return repoEvent.get();
     }
-
 }
 
