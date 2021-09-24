@@ -15,22 +15,29 @@ import java.time.LocalDateTime;
         @Index(name="IDX_acknowledged",columnList = "acknowledged"),
         @Index(name="IDX_created_ts",columnList = "created_ts"),
         @Index(name="IDX_updated_ts",columnList = "updated_ts"),
-        @Index(name="IDX_serviceIdentifier",columnList = "serviceIdentifier")
+        @Index(name="IDX_serviceIdentifier",columnList = "serviceIdentifier"),
+        @Index(name="IDX_eventResponsible",columnList = "eventResponsible"),
 }   )
 public class Event {
 
     @Id
-    //@NotNull
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
-
 
     @Column
     String serviceIdentifier;
 
     @Column
+    String eventResponsible;
+
+    @Column
     @NotNull
     private Boolean acknowledged;
+
+    @OneToOne
+    //@ManyToOne
+    //@JoinColumn(name="fk_group_id", referencedColumnName = "id")
+    private Group group;
 
     @CreationTimestamp
     private Timestamp created_ts;
@@ -41,6 +48,13 @@ public class Event {
     @Column(columnDefinition="TEXT")
     private String eventRaw;
 
+    public void setEventResponsible(String eventResponsible) {
+        this.eventResponsible = eventResponsible;
+    }
+
+    public String getEventResponsible() {
+        return eventResponsible;
+    }
 
     public Event() {
         this.acknowledged=false;
@@ -74,6 +88,14 @@ public class Event {
 
     public String getServiceIdentifier() {
         return serviceIdentifier;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group=group;
     }
 
     //LocalDateTime

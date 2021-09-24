@@ -13,6 +13,8 @@ public class EventController {
     @Autowired
     EventRepository eventRepository;
 
+/*
+ Endpoint is already exposed as part of rest
 
     @GetMapping(path="/events")
     public Iterable<Event> listEvents() {
@@ -20,6 +22,9 @@ public class EventController {
         return events;
     }
 
+*/
+    // for use with versioning
+    //@RequestMapping(value = "/user", headers = {"X-API-VERSION=v1"})
 
     @GetMapping(path="/events/unhandled")
     public Iterable<Event> listUnhandledEvents() {
@@ -27,13 +32,14 @@ public class EventController {
         return events;
     }
 
-
-    @GetMapping(path="/event/{id}")
+/*
+  Already implements on collection /events as part of rest-hall
+    @GetMapping(path="/events/{id}")
     public Event getEvents(@PathVariable Long id) {
         Optional<Event> events = eventRepository.findById(id);
         return events.get();
     }
-
+*/
 
     @PostMapping(path="/event/service/{serviceIdentifier}")
     public @ResponseBody
@@ -48,7 +54,6 @@ public class EventController {
         Optional<Event> repoEvent = eventRepository.findById(id);
         repoEvent.get().setAcknowledged(event.getAcknowledged());
         eventRepository.save(repoEvent.get());
-
         return repoEvent.get();
     }
 }
