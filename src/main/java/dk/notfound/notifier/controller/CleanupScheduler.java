@@ -18,7 +18,7 @@ import java.util.Calendar;
 import java.util.Optional;
 
 
-
+@Slf4j
 @Configuration
 @EnableScheduling
 public class CleanupScheduler {
@@ -39,6 +39,7 @@ public class CleanupScheduler {
 
         // deletes events older than maxDays
         eventRepository.deleteEventsByAge(ts);
+        log.info("Deleted events older than:" + maxDays + " days");
     }
 
 
