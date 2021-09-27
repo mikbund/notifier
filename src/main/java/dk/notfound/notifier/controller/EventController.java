@@ -69,9 +69,14 @@ public class EventController {
         return event;
     }
 
-    @PutMapping(path="/events/{id}")
+    @PutMapping(path="/events/{id}/acknowledge")
     public @ResponseBody Event ackKnowledge(@PathVariable Long id, @RequestBody Event event) {
         Optional<Event> repoEvent = eventRepository.findById(id);
+
+        if(event.getAcknowledged()==null) {
+            event.setAcknowledged(true);
+        }
+
         repoEvent.get().setAcknowledged(event.getAcknowledged());
         repoEvent.get().setEventResponsible(event.getEventResponsible());
         eventRepository.save(repoEvent.get());
