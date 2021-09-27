@@ -62,7 +62,6 @@ public class EventController {
         return events.get();
     }
 
-
     @PostMapping(path="/events/service/{serviceIdentifier}")
     public @ResponseBody Event createEvent(@PathVariable String serviceIdentifier, @RequestBody String eventRaw) {
       Event event = new Event(serviceIdentifier,eventRaw);
@@ -70,7 +69,7 @@ public class EventController {
         return event;
     }
 
-    @PostMapping(path="/events/acknowledge/{id}")
+    @PutMapping(path="/events/{id}")
     public @ResponseBody Event ackKnowledge(@PathVariable Long id, @RequestBody Event event) {
         Optional<Event> repoEvent = eventRepository.findById(id);
         repoEvent.get().setAcknowledged(event.getAcknowledged());
