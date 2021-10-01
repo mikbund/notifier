@@ -1,6 +1,5 @@
 package dk.notfound.notifier.controller;
 
-
 import dk.notfound.notifier.ApplicationConfiguration;
 import dk.notfound.notifier.model.Event;
 import dk.notfound.notifier.model.EventRepository;

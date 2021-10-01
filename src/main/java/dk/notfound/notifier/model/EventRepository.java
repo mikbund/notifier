@@ -21,5 +21,4 @@ public interface EventRepository extends CrudRepository<Event, Long> {
     @Query(value = "DELETE FROM Event e WHERE e.created_ts< :created")
     void deleteEventsByAge(@Param("created") Timestamp created);
 
-
 }

@@ -37,6 +37,7 @@ public class Group {
     @CreationTimestamp
     private Timestamp created_ts;
 
+
     @UpdateTimestamp
     private Timestamp updated_ts;
 
