@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Optional;
 
@@ -30,10 +31,10 @@ public class ServiceEntityScheduler {
  ServiceEntityRepository serviceEntityRepository;
 
  //Auto acknowledge events when TimeToLive in seconds + CreateTime is smaller than current Time.
- @Scheduled(cron ="*/30 * * * * *")
+ @Scheduled(cron ="*/10 * * * * *")
  public void autoAcknowledgeEvents() {
      Calendar cal = Calendar.getInstance();
-     Timestamp ts = new Timestamp(cal.getTimeInMillis());
+     Timestamp currentTime = new Timestamp(cal.getTimeInMillis());
 
     Iterable<Event> eventList = eventRepository.findAllByAcknowledged(false);
     Optional<ServiceEntity> serviceEntityOptional;
@@ -42,12 +43,13 @@ public class ServiceEntityScheduler {
 
              serviceEntityOptional = serviceEntityRepository.findByServiceIdentifier(e.getServiceIdentifier());
 
+
              if(serviceEntityOptional.isPresent() &&
                      serviceEntityOptional.get().getAutoAcknowledgeEvent()==true
-                     && (e.getCreated_ts().getTime()+serviceEntityOptional.get().getEventAcknowledgeTimer()*1000)<ts.getTime()    ) {
+                     && e.getCreated_ts().toInstant().plusSeconds(serviceEntityOptional.get().getEventAcknowledgeTimer()).isBefore( currentTime.toInstant() )  ) {
                  e.setAcknowledged(true);
                  eventRepository.save(e);
-                 log.info("Auto acknowledged event: " + e.getId() + " " + e.getServiceIdentifier());
+                 log.info("Auto acknowledged event: " + e.getId() + " " + e.getServiceIdentifier() +  "after: " + serviceEntityOptional.get().getEventAcknowledgeTimer() );
              }
       }
 
