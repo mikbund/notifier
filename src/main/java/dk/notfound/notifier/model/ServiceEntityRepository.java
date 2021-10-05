@@ -13,7 +13,7 @@ public interface ServiceEntityRepository extends CrudRepository<ServiceEntity, L
 
     Optional<ServiceEntity> findById(Long id);
 
-    Iterable<ServiceEntity>  findAllByautoAcknowledgeEvent(Boolean enabled);
+    Iterable<ServiceEntity>  findAllByAutoAcknowledgeEventOnTimer(Boolean enabled);
 
     Optional<ServiceEntity> findByServiceIdentifier(String serviceIdentifier);
 

@@ -10,9 +10,13 @@ import java.sql.Timestamp;
 
 
 @Entity
-@Table
-public class ServiceEntity {
+@Table(name="service_entities", indexes = {
+        @Index(name="IDX_serviceIdentifier",columnList = "serviceIdentifier"),
+        @Index(name="IDX_AutoCloseEventOnReception",columnList = "AutoCloseEventOnReception"),
+        @Index(name="IDX_autoAcknowledgeEventOnTimer",columnList = "autoAcknowledgeEventOnTimer")
+}   )
 
+public class ServiceEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,15 +30,21 @@ public class ServiceEntity {
     @NotNull
     private Long eventAcknowledgeTimer;
 
+   @Column
+   @NotNull
+    private Boolean AutoCloseEventOnReception = false;
+
     @Column
     @NotNull
-    private Boolean autoAcknowledgeEvent = false;
+    private Boolean autoAcknowledgeEventOnTimer = false;
 
     @CreationTimestamp
     private Timestamp created_ts;
 
     @UpdateTimestamp
     private Timestamp updated_ts;
+
+
 
     public void setEventAcknowledgeTimer(Long eventAcknowledgeTimer) {
         this.eventAcknowledgeTimer = eventAcknowledgeTimer;
@@ -54,15 +64,22 @@ public class ServiceEntity {
         return id;
     }
 
-    public void setAutoAcknowledgeEvent(Boolean autoAcknowledgeEvent) {
-        this.autoAcknowledgeEvent = autoAcknowledgeEvent;
+    public void setAutoAcknowledgeEventOnTimer(Boolean autoAcknowledgeEventOnTimer) {
+        this.autoAcknowledgeEventOnTimer = autoAcknowledgeEventOnTimer;
     }
 
-    public Boolean getAutoAcknowledgeEvent() {
-        return autoAcknowledgeEvent;
+    public Boolean getAutoAcknowledgeEventOnTimer() {
+        return autoAcknowledgeEventOnTimer;
     }
 
 
+    public Boolean getAutoCloseEventOnReception() {
+        return AutoCloseEventOnReception;
+    }
+
+    public void setAutoCloseEventOnReception(Boolean autoCloseEventOnReception) {
+        AutoCloseEventOnReception = autoCloseEventOnReception;
+    }
 
 
 
