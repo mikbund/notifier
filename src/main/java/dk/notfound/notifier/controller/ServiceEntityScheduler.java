@@ -29,7 +29,7 @@ public class ServiceEntityScheduler {
 
  //Auto acknowledge events when TimeToLive in seconds + CreateTime is smaller than current Time.
  @Scheduled(cron ="*/10 * * * * *")
- public void autoAcknowledgeEvents() {
+ public void autoAcknowledgeEventsOnTimer() {
      Calendar cal = Calendar.getInstance();
      Timestamp currentTime = new Timestamp(cal.getTimeInMillis());
 
@@ -49,6 +49,31 @@ public class ServiceEntityScheduler {
                  log.info("Auto acknowledged event: " + e.getId() + " " + e.getServiceIdentifier() +  "after: " + serviceEntityOptional.get().getEventAcknowledgeTimer() );
              }
       }
+ }
+
+ /*
+
+    events will on time passed change AutoAcknowledeEventReception.
+  */
+@Scheduled(cron = "*/15 * * * * *")
+public void disableAutoAcknowledgeEventsOnReception() {
+    Calendar cal = Calendar.getInstance();
+
+     Iterable<ServiceEntity> serviceEntities;
+     serviceEntities = serviceEntityRepository.findAllByAutoAcknowledgeEventOnReception(true);
+
+     Timestamp currentTimeStamp = new Timestamp(cal.getTimeInMillis());
+
+     for(ServiceEntity s: serviceEntities) {
+
+            if (s.getAutoAcknowledgeEventOnReceptionUntilTs()!=null && s.getAutoAcknowledgeEventOnReceptionUntilTs().before( currentTimeStamp )) {
+                s.setAutoAcknowledgeEventOnReception(false);
+                serviceEntityRepository.save(s);
+                log.info("Disabled AutoAcknowledgeEventOnReception for: " + s.getServiceIdentifier());
+            }
+     }
+
+
 
 }
 

@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name="service_entities", indexes = {
         @Index(name="IDX_serviceIdentifier",columnList = "serviceIdentifier"),
-        @Index(name="IDX_AutoCloseEventOnReception",columnList = "AutoCloseEventOnReception"),
+        @Index(name="IDX_AutoAcknowledgeEventOnReception",columnList = "AutoAcknowledgeEventOnReception"),
         @Index(name="IDX_autoAcknowledgeEventOnTimer",columnList = "autoAcknowledgeEventOnTimer")
 }   )
 
@@ -20,7 +20,6 @@ public class ServiceEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -30,9 +29,14 @@ public class ServiceEntity {
     @NotNull
     private Long eventAcknowledgeTimer;
 
-   @Column
-   @NotNull
-    private Boolean AutoCloseEventOnReception = false;
+    @Column
+    @NotNull
+    private Boolean autoAcknowledgeEventOnReception = false;
+
+
+    @Column
+    Timestamp autoAcknowledgeEventOnReceptionUntilTs;
+
 
     @Column
     @NotNull
@@ -73,15 +77,21 @@ public class ServiceEntity {
     }
 
 
-    public Boolean getAutoCloseEventOnReception() {
-        return AutoCloseEventOnReception;
+    public Boolean getAutoAcknowledgeEventOnReception() {
+        return autoAcknowledgeEventOnReception;
     }
 
-    public void setAutoCloseEventOnReception(Boolean autoCloseEventOnReception) {
-        AutoCloseEventOnReception = autoCloseEventOnReception;
+    public void setAutoAcknowledgeEventOnReception(Boolean autoAcknowledgeEventOnReception) {
+        this.autoAcknowledgeEventOnReception = autoAcknowledgeEventOnReception;
     }
 
+    public Timestamp getAutoAcknowledgeEventOnReceptionUntilTs() {
+        return autoAcknowledgeEventOnReceptionUntilTs;
+    }
 
+    public void setAutoAcknowledgeEventOnReceptionUntilTs(Timestamp autoAcknowledgeEventOnReceptionUntilTs) {
+        this.autoAcknowledgeEventOnReceptionUntilTs = autoAcknowledgeEventOnReceptionUntilTs;
+    }
 
 
 

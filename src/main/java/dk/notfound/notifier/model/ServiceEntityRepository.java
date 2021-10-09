@@ -15,6 +15,9 @@ public interface ServiceEntityRepository extends CrudRepository<ServiceEntity, L
 
     Iterable<ServiceEntity>  findAllByAutoAcknowledgeEventOnTimer(Boolean enabled);
 
+
+    Iterable<ServiceEntity>  findAllByAutoAcknowledgeEventOnReception(Boolean enabled);
+
     Optional<ServiceEntity> findByServiceIdentifier(String serviceIdentifier);
 
   //  @Query(value="FROM ServiceEntity s WHERE s.enabled=true AND s.serviceIdentifier=: serviceIdentifier")

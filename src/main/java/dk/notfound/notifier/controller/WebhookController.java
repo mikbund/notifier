@@ -33,8 +33,8 @@ public class WebhookController {
        Optional<Group> group = groupRepository.findByGroupName(groupName);
        Event event = new Event(serviceIdentifier,eventRaw);
 
-       if(serviceEntityOptional.isPresent() && serviceEntityOptional.get().getAutoCloseEventOnReception()==true) {
-           event.setAcknowledged(serviceEntityOptional.get().getAutoCloseEventOnReception());
+       if(serviceEntityOptional.isPresent() && serviceEntityOptional.get().getAutoAcknowledgeEventOnReception()==true) {
+           event.setAcknowledged(serviceEntityOptional.get().getAutoAcknowledgeEventOnReception());
            event.setEventResponsible("SYSTEM-ACKNOWLEDGED");
        }
 
