@@ -5,6 +5,7 @@ import dk.notfound.notifier.model.EventRepository;
 import dk.notfound.notifier.model.ServiceEntity;
 import dk.notfound.notifier.model.ServiceEntityRepository;
 import lombok.extern.slf4j.Slf4j;
+import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -28,6 +29,7 @@ public class ServiceEntityScheduler {
  ServiceEntityRepository serviceEntityRepository;
 
  //Auto acknowledge events when TimeToLive in seconds + CreateTime is smaller than current Time.
+ @SchedulerLock(name = "autoAcknowledgeEventsOnTimer",lockAtLeastFor = "9s")
  @Scheduled(cron ="*/10 * * * * *")
  public void autoAcknowledgeEventsOnTimer() {
      Calendar cal = Calendar.getInstance();
@@ -52,10 +54,10 @@ public class ServiceEntityScheduler {
  }
 
  /*
-
     events will on time passed change AutoAcknowledeEventReception.
   */
-@Scheduled(cron = "*/15 * * * * *")
+ @SchedulerLock(name = "disableAutoAcknowledgeEventsOnReception", lockAtLeastFor = "14s")
+ @Scheduled(cron = "*/15 * * * * *")
 public void disableAutoAcknowledgeEventsOnReception() {
     Calendar cal = Calendar.getInstance();
 
@@ -72,11 +74,7 @@ public void disableAutoAcknowledgeEventsOnReception() {
                 log.info("Disabled AutoAcknowledgeEventOnReception for: " + s.getServiceIdentifier());
             }
      }
-
-
-
 }
-
 
 }
 

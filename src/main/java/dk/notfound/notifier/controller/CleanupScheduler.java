@@ -4,6 +4,7 @@ import dk.notfound.notifier.ApplicationConfiguration;
 import dk.notfound.notifier.model.Event;
 import dk.notfound.notifier.model.EventRepository;
 import lombok.extern.slf4j.Slf4j;
+import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +29,7 @@ public class CleanupScheduler {
     EventRepository eventRepository;
 
     @Transactional
+    @SchedulerLock(name = "deleteObsoleteEvents", lockAtLeastFor = "10s")
     @Scheduled(cron ="0 */30 * * * *")
     public void deleteObsoleteEvents() {
 
@@ -40,10 +42,5 @@ public class CleanupScheduler {
         eventRepository.deleteEventsByAge(ts);
         log.info("Deleted events older than:" + maxDays + " days");
     }
-
-
-
-
-
 
 }
