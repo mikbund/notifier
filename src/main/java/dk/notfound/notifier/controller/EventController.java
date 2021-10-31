@@ -38,6 +38,13 @@ public class EventController {
         return events;
     }
 
+    @GetMapping(path="/events/handled")
+    public @ResponseBody  Iterable<Event> listHandledEvents() {
+        Iterable<Event> events = eventRepository.findAllByAcknowledged(true);
+        return events;
+    }
+
+
 
     @GetMapping(path="/events/groups/{groupName}/unhandled")
     public @ResponseBody  Iterable<Event> listUnhandledEvents(@PathVariable String groupName) {

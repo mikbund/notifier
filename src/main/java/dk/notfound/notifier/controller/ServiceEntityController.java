@@ -17,14 +17,13 @@ public class ServiceEntityController {
     @Autowired
     ServiceEntityRepository serviceEntityRepository;
 
-/*
-    @GetMapping(path="/serviceentities")
+    @GetMapping(path="/serviceEntities")
     public @ResponseBody
     Iterable<ServiceEntity> listServiceEntities() {
 
         return serviceEntityRepository.findAll();
 
-    }
-*/
+   }
+
 
 }

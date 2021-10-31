@@ -49,6 +49,9 @@ public class ServiceEntity {
     private Timestamp updated_ts;
 
 
+    public Long getId() {
+        return id;
+    }
 
     public void setEventAcknowledgeTimer(Long eventAcknowledgeTimer) {
         this.eventAcknowledgeTimer = eventAcknowledgeTimer;
@@ -61,11 +64,6 @@ public class ServiceEntity {
 
     public String getServiceIdentifier() {
         return serviceIdentifier;
-    }
-
-
-    public Long getId() {
-        return id;
     }
 
     public void setAutoAcknowledgeEventOnTimer(Boolean autoAcknowledgeEventOnTimer) {
