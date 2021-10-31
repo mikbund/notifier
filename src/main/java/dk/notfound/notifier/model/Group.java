@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
             @Index(name="IDX_group_name",columnList = "groupName"),
         }
     )
+
 public class Group {
 
     @Id
