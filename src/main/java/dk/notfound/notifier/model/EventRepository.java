@@ -17,6 +17,8 @@ public interface EventRepository extends CrudRepository<Event, Long> {
     @Query(value = "FROM Event e WHERE e.acknowledged= :acknowledged AND e.group= :group")
     Iterable<Event> FindAllByGroupAndAcknowledged(Group group,Boolean acknowledged);
 
+
+
     @Modifying
     @Query(value = "DELETE FROM Event e WHERE e.created_ts< :created")
     void deleteEventsByAge(@Param("created") Timestamp created);

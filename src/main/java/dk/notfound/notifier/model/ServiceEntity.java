@@ -27,7 +27,7 @@ public class ServiceEntity {
 
     @Column
     @NotNull
-    private Long eventAcknowledgeTimer;
+    private Long eventAcknowledgeTimer = 0L;
 
     @Column
     @NotNull
