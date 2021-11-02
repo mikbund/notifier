@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Slf4j
 @RestController
 public class ServiceEntityController {
@@ -30,13 +32,14 @@ public class ServiceEntityController {
         return serviceEntity;
     }
 
-    @PutMapping(path="/serviceEntities")
+    @DeleteMapping(path="/serviceEntities/{id}")
     public @ResponseBody
-    ServiceEntity put_createServiceEntity(@RequestBody ServiceEntity serviceEntity) {
+    Optional<ServiceEntity> deleteServiceEntity(@PathVariable Long id) {
+        Optional<ServiceEntity> serviceEntity;
+        serviceEntity = serviceEntityRepository.findById(id);
 
-        serviceEntityRepository.save(serviceEntity);
+        serviceEntityRepository.deleteById(id);
+
         return serviceEntity;
     }
-
-
 }

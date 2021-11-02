@@ -20,8 +20,6 @@ public interface ServiceEntityRepository extends CrudRepository<ServiceEntity, L
 
     Optional<ServiceEntity> findByServiceIdentifier(String serviceIdentifier);
 
-  //  @Query(value="FROM ServiceEntity s WHERE s.enabled=true AND s.serviceIdentifier=: serviceIdentifier")
-  //  Optional<ServiceEntity>  findAllByServiceIdentifierAndEnabled(String serviceIdentifier);
 
 
 
