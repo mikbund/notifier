@@ -23,7 +23,6 @@ public interface ServiceEntityRepository extends CrudRepository<ServiceEntity, L
 
 
 
-
 }
 
 

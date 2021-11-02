@@ -2,6 +2,7 @@ package dk.notfound.notifier.model;
 
 
 
+import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.UpdateTimestamp;
